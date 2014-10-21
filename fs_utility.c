@@ -23,10 +23,13 @@ int32_t is_path_exists(const char* path)
 			return 0; // return 1;
 		else return 3;
 	}
-
+#ifdef __GNUC__
 	if (S_ISDIR(file_stat.st_mode))
 		return 2;
 	else return 1;
+#else
+	return 1;
+#endif
 }
 
 #define TEST_FILE_NAME ".____etm____test____file____"

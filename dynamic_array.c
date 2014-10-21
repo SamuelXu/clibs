@@ -124,9 +124,6 @@ void dynamic_array_copy(dynamic_array_t* self, const dynamic_array_t* other)
 
 int32_t dynamic_array_clone(dynamic_array_t* self, const dynamic_array_t* other)
 {
-	char* buf;
-	uint32_t buf_size;
-
 	dynamic_array_clear(self);
 	//assert(self->element_size == other->element_size);
 	//self->capacity = other->size;
@@ -225,13 +222,13 @@ int32_t dynamic_array_insert(dynamic_array_t* self, uint32_t index, const void* 
 /* cmp(self[i], p_target) */
 static int32_t dynamic_array_bsearch_index(dynamic_array_t* self, const void* p_target, comparator_t cmp, int32_t* p_result)
 {
-	int32_t mid = 0;
+	uint32_t mid = 0;
 	int32_t start = 0;
 	int32_t end = (int32_t)self->size - 1;
 	while (start <= end)
 	{
 		int32_t ret;
-		mid = (start + end) / 2;
+		mid = (uint32_t)(start + end) / 2;
 		ret = cmp(self->data + mid*self->element_size, p_target);
 		if (ret < 0)
 		{
@@ -256,13 +253,13 @@ static int32_t dynamic_array_bsearch_index(dynamic_array_t* self, const void* p_
 /* cmp(p_target, self[i]) */
 static int32_t dynamic_array_bsearch_index_reverse(dynamic_array_t* self, const void* p_target, comparator_t cmp, int32_t* p_result)
 {
-	int32_t mid = 0;
+	uint32_t mid = 0;
 	int32_t start = 0;
 	int32_t end = (int32_t)self->size - 1;
 	while (start <= end)
 	{
 		int32_t ret;
-		mid = (start + end) / 2;
+		mid = (uint32_t)(start + end) / 2;
 		ret = cmp(p_target, self->data + mid*self->element_size);
 		if (ret < 0)
 		{

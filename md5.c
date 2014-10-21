@@ -3,8 +3,8 @@
 copyright liuxuan - 2012 , liu20076@sina.com
 */
 
-#include "md5.h"
 #include "define.h"
+#include "md5.h"
 #include <memory.h>
 
 static inline uint32_t rol32(uint32_t n,uint32_t bits){

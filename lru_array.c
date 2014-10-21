@@ -18,7 +18,6 @@ void lru_array_initialize(lru_array_t* self, uint32_t capacity,
 						uint32_t element_size, uint32_t expire_time, unary_function_t finalizer)
 {
 	uint32_t i;
-	uint32_t timestamp;
 
 	self->data = (char*)calloc(capacity, element_size);
 
@@ -38,7 +37,7 @@ void lru_array_initialize(lru_array_t* self, uint32_t capacity,
 
 void lru_array_finalize(lru_array_t* self)
 {
-	int32_t i;
+	uint32_t i;
 
 	printf("lru capacity = %u, lur expire_time = %u, lru hit_count = %u, lru miss_count = %u",
 		self->capacity, self->expire_time, self->hit_count, self->miss_count);
@@ -62,8 +61,8 @@ void lru_array_finalize(lru_array_t* self)
 
 void lru_array_for_each(lru_array_t* self, unary_function_t unary_function)
 {
-	int32_t i;
-	uint32_t cur_time = time(NULL);
+	uint32_t i;
+	uint32_t cur_time = (uint32_t)time(NULL);
 
 	for (i = 0; i < self->element_size; ++i)
 	{
@@ -124,7 +123,7 @@ static void* lru_array_put_impl(lru_array_t* self, const void* p_target, compara
 	char* p_element;
 	uint32_t i = 0;
 	uint32_t oldest = 0;
-	uint32_t cur_time = time(NULL);
+	uint32_t cur_time = (uint32_t)time(NULL);
 
 	for (i = 0; i < self->capacity; ++i)
 	{
@@ -185,7 +184,7 @@ void* lru_array_get(lru_array_t* self, const void* key, comparator_t compar)
 {
 	char* p_element;
 	uint32_t i = 0;
-	uint32_t cur_time = time(NULL);
+	uint32_t cur_time = (uint32_t)time(NULL);
 
 	for (; i < self->capacity; ++i)
 	{
@@ -220,7 +219,7 @@ void lru_array_refresh(lru_array_t* self, const void* key, comparator_t compar)
 		if (self->timestamp[i] != EMPTY_TIMESTAMP
 			&& compar(self->data + i*self->element_size, key) == 0)
 		{
-			self->timestamp[i] = time(NULL);
+			self->timestamp[i] = (uint32_t)time(NULL);
 			break;
 		}
 	}
@@ -250,7 +249,7 @@ void lru_array_reset(lru_array_t* self, const void* key, comparator_t compar)
 		if (self->timestamp[i] != EMPTY_TIMESTAMP
 			&& compar(self->data + i*self->element_size, key) == 0)
 		{
-			lru_array_force_set_timestamp(&self->timestamp[i], time(NULL), 0);
+			lru_array_force_set_timestamp(&self->timestamp[i], (uint32_t)time(NULL), 0);
 			break;
 		}
 	}

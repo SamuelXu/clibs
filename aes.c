@@ -2,8 +2,8 @@
 # -*- coding:UTF-8 -*-
 */
 
-#include "aes.h"
 #include "define.h"
+#include "aes.h"
 #include "error_code.h"
 #include <string.h>
 

@@ -7,10 +7,6 @@
 #include "logger.h"
 #include "string_utility.h"
 
-//debug
-//#include <assert.h>
-#include <pthread.h>
-
 #ifdef __cplusplus
 extern "C" 
 {
